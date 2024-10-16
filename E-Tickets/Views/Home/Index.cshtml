@@ -1,0 +1,49 @@
+﻿<div class="container">
+    <div class="row">
+        @foreach (var movie in Model) // Assuming Model.Movies is your list of movie models
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-lg border-0" style="display: flex; flex-direction: row; align-items: center; border-radius: 10px;">
+                    <img src="~/images/movies/@movie.ImgUrl" class="card-img-left" alt="@movie.Name" style="width: 200px; height: auto; object-fit: cover; border-top-left-radius: 10px; border-bottom-left-radius: 10px;">
+                    <div class="card-body" style="flex: 1; padding: 20px; background-color: #f9f9f9; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+                        <h5 class="card-title text-primary" style="font-size: 1.5rem; font-weight: bold;">@movie.Name</h5>
+                        <p class="card-text"><strong>Cinema:</strong> @movie.Cinema.Name</p>
+                        <p class="card-text"><strong>Category:</strong> @movie.Category.Name</p>
+                        <p class="card-text"><strong>Start Date:</strong> @movie.StartDate.ToString("MM/dd/yyyy")</p>
+                        <p class="card-text"><strong>End Date:</strong> @movie.EndDate.ToString("MM/dd/yyyy")</p>
+                        <p class="card-text">
+                            <strong>🎟️ Ticket Price:</strong>
+                            <span class="text-success fw-bold">$@movie.Price</span>
+                        </p>
+
+                        <div class="d-flex gap-3 mt-2">
+                            <button type="button" class="btn btn-info">Available</button>
+                            <a href="/Home/Details/@movie.Id" class="btn btn-success">Show More</a>
+                            <button type="button" class="btn btn-dark">Book a Ticket</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.3s;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+    .card-img-left {
+        border-radius: 10px 0 0 10px; /* Ensure rounded corners on the image */
+    }
+
+    .card-body {
+        border-radius: 0 10px 10px 0; /* Ensure rounded corners on the card body */
+    }
+
+</style>

@@ -1,0 +1,104 @@
+﻿@model IEnumerable<Cinema>
+<div class="container mt-5">
+    <h2 class="mb-4 text-center text-info font-weight-bold animated-title">Cinemas</h2>
+    <div class="d-flex justify-content-end mb-3">
+        <a href="/Cinema/Add" class="btn btn-primary btn-lg shadow-sm animated-button">Add Cinema</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Cinema Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Movies</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var cinema in Model)
+                {
+                    <tr class="table-row">
+                        <td>@cinema.Id</td>
+                        <td>@cinema.Name</td>
+                        <td>@cinema.Address</td>
+                        <td>
+                            <a href="/Cinema/AllMovies/@cinema.Id" class="btn btn-info btn-sm animated-action">Box Office</a>
+                        </td>
+                        <td>
+                            <a href="#" class="btn btn-warning btn-sm animated-action">Edit</a>
+                            <button type="button" class="btn btn-danger btn-sm animated-action" onclick="confirmDelete('#')">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function confirmDelete(id) {
+        if (confirm('Are you sure you want to delete this cinema?')) {
+            window.location.href = '/Cinema/Delete/' + id;
+        }
+    }
+</script>
+
+<style>
+    body {
+        background: linear-gradient(to right, #e0f7fa, #80deea); /* Soft gradient background */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+    }
+
+    .animated-title {
+        animation: fadeIn 1s ease-in-out; /* Fade-in effect for the title */
+    }
+
+
+    .table th, .table td {
+        vertical-align: middle; /* Center align the content */
+        font-size: 1.1rem; /* Slightly larger font size for better readability */
+    }
+
+    .table {
+        border-radius: 10px; /* Rounded corners for the table */
+        overflow: hidden; /* Clip the borders */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+    }
+
+    .table thead {
+        background-color: #343a40; /* Dark background for the header */
+        color: #fff; /* White text for headers */
+    }
+
+    .table-hover tbody tr {
+        transition: background-color 0.3s ease; /* Smooth transition for row hover */
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #e7f1ff; /* Light blue background on hover */
+        transform: scale(1.02); /* Slightly enlarge row on hover */
+    }
+
+    .btn-lg, .btn-sm {
+        transition: transform 0.2s, background-color 0.3s; /* Animation for button hover */
+    }
+
+    .btn-lg:hover {
+        transform: scale(1.05); /* Slightly increase button size on hover */
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    .btn-warning:hover {
+        background-color: #e6ac00; /* Darker yellow on hover */
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333; /* Darker red on hover */
+    }
+
+    .animated-action {
+        animation: bounce 0.5s; /* Bounce animation on buttons */
+    }
+
+</style>
