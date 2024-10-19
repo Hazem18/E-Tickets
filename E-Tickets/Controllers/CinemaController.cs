@@ -1,27 +1,74 @@
 ﻿using E_Tickets.Data;
+using E_Tickets.Models;
+using E_Tickets.Repository.IRepository;
+using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace E_Tickets.Controllers
 {
     public class CinemaController : Controller
     {
-        public ApplicationDbContext context { get; set; } = new ApplicationDbContext();
+        private readonly IDbRepository<Cinema> CinemadbRepository;
+        private readonly IDbRepository<Movie> MoviedbRepository;
+
+        
+
+        public CinemaController(IDbRepository<Cinema> CinemadbRepository , IDbRepository<Movie> MoviedbRepository)
+        {
+            this.CinemadbRepository=CinemadbRepository;
+            this.MoviedbRepository=MoviedbRepository;
+        }
         public IActionResult Index()
         {
-            var cinemas = context.Cinemas.ToList();
+            var cinemas = CinemadbRepository.GetAll();
             return View(cinemas);
         }
 
         public IActionResult AllMovies(int Id)
         {
-            var movies = context.Movies
-             .Include(e => e.Cinema)
-             .Include(e => e.Category)
-             .Where(e => e.CinemaId == Id)
-             .ToList();
+            var includeExpression = new List<Expression<Func<Movie , object>>>
+            {
+                c => c.Category,
+                c => c.Cinema
+            };
+            var movies = MoviedbRepository.GetAll(includeExpression)
+             .Where(e => e.CinemaId == Id);
+             
             return View(movies);
 
+        }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        public IActionResult Edit(int Id)
+        {
+            var cinema = CinemadbRepository.GetById(Id);
+            return View(cinema);
+        }
+
+        [HttpPost]
+        public IActionResult Create(Cinema cinema)
+        {
+            CinemadbRepository.Create(cinema);
+            CinemadbRepository.Commit();
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Cinema cinema)
+        {
+            CinemadbRepository.Update(cinema);
+            CinemadbRepository.Commit();
+            return RedirectToAction("Index");
+        }
+        public IActionResult Delete(int Id)
+        {
+            CinemadbRepository.Delete(Id);
+            CinemadbRepository.Commit();
+            return RedirectToAction("Index");
         }
 
     }

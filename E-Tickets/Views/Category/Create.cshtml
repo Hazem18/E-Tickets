@@ -1,0 +1,82 @@
+﻿<div class="container mt-5">
+    <div class="card shadow-lg border-0" style="max-width: 700px; margin: 0 auto; border-radius: 20px;">
+        <div class="card-header text-center" style="background: linear-gradient(to right, #6a82fb, #fc5c7d); color: white; padding: 1.5rem; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+            <h2 class="mb-0" style="font-size: 2rem; font-weight: 600;">Add Category</h2>
+        </div>
+        <div class="card-body" style="background-color: #f2f7fa; padding: 2rem;">
+            <form action="/Category/Create" method="post" id="categoryForm">
+                <div class="form-group mb-4">
+                    <label for="categoryName" class="form-label" style="font-size: 1.25rem; font-weight: 500;">Category Name</label>
+                    <input type="text" id="categoryName" name="Name" class="form-control form-control-lg" placeholder="Enter category name" required style="border-radius: 10px; padding: 1rem; font-size: 1.15rem; border: 1px solid #ced4da;" />
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary btn-lg" style="padding: 0.75rem 1.5rem; border-radius: 12px; font-size: 1.2rem; background-color: #6a82fb; border: none; transition: background-color 0.3s;">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('categoryForm').addEventListener('submit', function (event) {
+        const categoryName = document.getElementById('categoryName').value.trim();
+
+        if (categoryName) {
+            alert('Category added successfully!');
+            // Clear the input field after a successful submission
+            // this.submit(); // Do not call this here to prevent empty submission
+        } else {
+            alert('Please enter a category name.');
+            event.preventDefault(); // Prevent submission if input is invalid
+        }
+    });
+</script>
+
+
+
+<style>
+    .container {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .card {
+        background-color: #ffffff;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border: none;
+        transition: box-shadow 0.3s;
+    }
+
+        .form-control:focus {
+            box-shadow: 0 0 15px rgba(106, 130, 251, 0.4);
+            outline: none;
+        }
+
+    .btn-primary:hover {
+        background-color: #5a6ee1;
+    }
+
+    body {
+        background: #eef2f7; /* Light, restful background */
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .card-header {
+        font-family: 'Roboto', sans-serif;
+        letter-spacing: 1px;
+    }
+
+    .btn-primary {
+        background-color: #6a82fb;
+        border: none;
+        transition: transform 0.2s;
+    }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+        }
+</style>

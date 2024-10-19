@@ -1,38 +1,46 @@
 using E_Tickets.Data;
 using E_Tickets.Models;
+using E_Tickets.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Linq.Expressions;
 
 namespace E_Tickets.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        public ApplicationDbContext context { get; set; } = new ApplicationDbContext();
-        public HomeController(ILogger<HomeController> logger)
+        private readonly Repository.IRepository.IDbRepository<Movie> dbRepository;
+        //public HomeController(IDbRepository<Movie> dbRepository)
+        //{
+        //    this.dbRepository=dbRepository;
+        //}
+        public HomeController(ILogger<HomeController> logger , IDbRepository<Movie> dbRepository)
         {
             _logger = logger;
+             this.dbRepository=dbRepository;
         }
 
         public IActionResult Index()
         {
-            var movies = context.Movies.
-                Include(e =>  e.Category)
-                .Include(e => e.Cinema)
-                .Select(e => new {e.Id, e.Name, e.Price, e.Category, e.StartDate, e.EndDate, e.Cinema , e.MovieStatus, e.ImgUrl })
-                .ToList();
+            var includeExpression = new List<Expression<Func<Movie, object>>>
+            {
+                c => c.Cinema,
+                c => c.Category
+            };
+            var movies = dbRepository.GetAll(includeExpression);
             return View(movies);
         }
         public IActionResult Details(int Id)
         {
-
-            var movie = context.Movies.
-                Include(e => e.Category)
-                .Include(e => e.Cinema)
-                .Include (e => e.Actors)
-                .Select(e => new {e.Id , e.Name, e.Price, e.Category, e.StartDate, e.EndDate, e.Cinema, e.MovieStatus, e.ImgUrl , e.Actors })
-                .FirstOrDefault(e => e.Id == Id);
+            var inclueExpression = new List<Expression<Func<Movie, object>>>
+            {
+                c => c.Cinema,
+                c => c.Category,
+                c => c.Actors
+            };
+            var movie = dbRepository.GetAll(inclueExpression).FirstOrDefault(e => e.Id == Id);
             return View(movie);
         }
         public IActionResult Privacy()

@@ -1,0 +1,33 @@
+﻿@model Category
+<div class="container mt-5">
+    <div class="card shadow-lg border-0" style="max-width: 700px; margin: 0 auto; border-radius: 20px;">
+        <div class="card-header text-center" style="background: linear-gradient(to right, #6a82fb, #fc5c7d); color: white; padding: 1.5rem; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+            <h2 class="mb-0" style="font-size: 2rem; font-weight: 600;">Edit Category @Model.Name</h2>
+        </div>
+        <div class="card-body" style="background-color: #f2f7fa; padding: 2rem;">
+            <form action="/Category/Edit" method="post" id="categoryForm">
+                <input type="hidden" name="Id" value="@Model.Id" />
+                <div class="form-group mb-4">
+                    <label for="categoryName" class="form-label" style="font-size: 1.25rem; font-weight: 500;">Category Name</label>
+                    <input type="text" id="categoryName" name="Name" class="form-control form-control-lg" value="@Model.Name" required placeholder="Enter category name" style="border-radius: 10px; padding: 1rem; font-size: 1.15rem; border: 1px solid #ced4da;" />
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary btn-lg" style="padding: 0.75rem 1.5rem; border-radius: 12px; font-size: 1.2rem; background-color: #6a82fb; border: none; transition: background-color 0.3s;">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('categoryForm').addEventListener('submit', function (event) {
+        const categoryName = document.getElementById('categoryName').value.trim();
+
+        if (categoryName) {
+            alert('Category updated successfully!');
+        } else {
+            alert('Please enter a category name.');
+            event.preventDefault(); // Prevent submission if input is invalid
+        }
+    });
+</script>

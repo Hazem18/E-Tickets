@@ -1,3 +1,8 @@
+using E_Tickets.Repository.IRepository;
+using E_Tickets.Repository;
+using E_Tickets.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace E_Tickets
 {
     public class Program
@@ -8,6 +13,15 @@ namespace E_Tickets
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            // Register ApplicationDbContext with DbContextOptions
+            builder.Services.AddDbContext<ApplicationDbContext>(
+                    options => options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection")));
+
+            // Register your generic repository
+            builder.Services.AddScoped(typeof(IDbRepository<>), typeof(DbRepository<>));
+
+            
 
             var app = builder.Build();
 
