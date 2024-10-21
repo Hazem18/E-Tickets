@@ -30,18 +30,6 @@ namespace E_Tickets.Controllers
             var movies = MoviedbRepository.GetAll(includeExpression); 
             return View(movies);
         }
-
-        public IActionResult Details(int Id)
-        {
-            var includeExpression = new List<Expression<Func<Movie, object>>>
-            {
-                c => c.Category,
-                c=>c.Cinema,
-                c=>c.Actors
-            };
-            var movie = MoviedbRepository.GetAll(includeExpression).FirstOrDefault(e => e.Id == Id);
-            return View(movie);
-        }
         public IActionResult Create()
         {
             LoadBags();
