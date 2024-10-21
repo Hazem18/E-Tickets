@@ -1,0 +1,138 @@
+﻿<div class="container mt-5">
+    <div class="card shadow-lg border-0" style="max-width: 700px; margin: 0 auto; border-radius: 20px;">
+        <div class="card-header text-center" style="background: linear-gradient(to right, #6a82fb, #fc5c7d); color: white; padding: 1.5rem; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+            <h2 class="mb-0" style="font-size: 2rem; font-weight: 600;">Add Movie</h2>
+        </div>
+        <div class="card-body" style="background-color: #f2f7fa; padding: 2rem;">
+            <form action="/Movie/Create" method="post" enctype="multipart/form-data" id="movieForm">
+                <!-- Movie Name -->
+                <div class="form-group mb-4">
+                    <label for="movieName" class="form-label" style="font-size: 1.25rem; font-weight: 500;">Movie Name</label>
+                    <input type="text" id="movieName" name="Name" class="form-control form-control-lg" placeholder="Enter movie name" required style="border-radius: 10px; padding: 1rem; font-size: 1.15rem;" />
+                </div>
+
+                <!-- Category Dropdown -->
+                <div class="form-group mb-4">
+                    <label for="category" class="form-label" style="font-size: 1.25rem; font-weight: 500;">Category</label>
+                    <select id="category" name="CategoryId" class="form-control form-control-lg" required style="border-radius: 10px; padding: 1rem; font-size: 1.15rem;">
+                        <option value="">Select a category</option>
+                        @foreach (var category in ViewBag.Categories)
+                        {
+                            <option value="@category.Id">@category.Name</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- Cinema Dropdown -->
+                <div class="form-group mb-4">
+                    <label for="cinema" class="form-label" style="font-size: 1.25rem; font-weight: 500;">Cinema</label>
+                    <select id="cinema" name="CinemaId" class="form-control form-control-lg" required style="border-radius: 10px; padding: 1rem; font-size: 1.15rem;">
+                        <option value="">Select a cinema</option>
+                        @foreach (var cinema in ViewBag.Cinemas)
+                        {
+                            <option value="@cinema.Id">@cinema.Name</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- Start Date -->
+                <div class="form-group mb-4">
+                    <label for="startDate" class="form-label" style="font-size: 1.25rem; font-weight: 500;">Start Date</label>
+                    <input type="date" id="startDate" name="StartDate" class="form-control form-control-lg" required style="border-radius: 10px; padding: 1rem; font-size: 1.15rem;" />
+                </div>
+
+                <!-- End Date -->
+                <div class="form-group mb-4">
+                    <label for="endDate" class="form-label" style="font-size: 1.25rem; font-weight: 500;">End Date</label>
+                    <input type="date" id="endDate" name="EndDate" class="form-control form-control-lg" required style="border-radius: 10px; padding: 1rem; font-size: 1.15rem;" />
+                </div>
+
+                <!-- Description -->
+                <div class="form-group mb-4">
+                    <label for="description" class="form-label" style="font-size: 1.25rem; font-weight: 500;">Description</label>
+                    <textarea id="description" name="Description" class="form-control form-control-lg" rows="3" placeholder="Enter movie description" required style="border-radius: 10px; padding: 1rem; font-size: 1.15rem;"></textarea>
+                </div>
+
+                <!-- Ticket Price -->
+                <div class="form-group mb-4">
+                    <label for="ticketPrice" class="form-label" style="font-size: 1.25rem; font-weight: 500;">Ticket Price</label>
+                    <input type="number" id="ticketPrice" name="Price" class="form-control form-control-lg" placeholder="Enter ticket price" required style="border-radius: 10px; padding: 1rem; font-size: 1.15rem;" />
+                </div>
+
+                <!-- Trailer URL -->
+                <div class="form-group mb-4">
+                    <label for="trailerUrl" class="form-label" style="font-size: 1.25rem; font-weight: 500;">Trailer URL</label>
+                    <input type="url" id="trailerUrl" name="TrailerUrl" class="form-control form-control-lg" placeholder="Enter trailer URL" required style="border-radius: 10px; padding: 1rem; font-size: 1.15rem;" />
+                </div>
+
+                <!-- Movie Poster -->
+                <div class="form-group mb-4">
+                    <label for="poster" class="form-label" style="font-size: 1.25rem; font-weight: 500;">Movie Poster</label>
+                    <input type="file" id="poster" name="ImgUrl" class="form-control form-control-lg" accept="image/*" required style="border-radius: 10px; padding: 1rem; font-size: 1.15rem;" />
+                    <img id="posterPreview" src="#" alt="Poster Preview" style="display: none; margin-top: 10px; max-width: 100%; border-radius: 10px;" />
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary btn-lg" style="padding: 0.75rem 1.5rem; border-radius: 12px; font-size: 1.2rem;">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('poster').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById('posterPreview');
+
+            if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result; // Set the preview image source to the file's data URL
+                preview.style.display = 'block'; // Show the preview
+            };
+            reader.readAsDataURL(file); // Read the file as a data URL
+        } else {
+                preview.src = '#'; // Reset the preview source
+                preview.style.display = 'none'; // Hide the preview
+            }
+        });
+</script>
+
+<style>
+    body {
+        background: #eef2f7; /* Light, restful background */
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .card {
+        background-color: #ffffff;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border: none;
+        transition: box-shadow 0.3s;
+    }
+
+        .form-control:focus {
+            box-shadow: 0 0 15px rgba(106, 130, 251, 0.4);
+            outline: none;
+        }
+
+    .btn-primary {
+        background-color: #6a82fb;
+        border: none;
+        transition: transform 0.2s;
+    }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+        }
+
+    .card-header {
+        font-family: 'Roboto', sans-serif;
+        letter-spacing: 1px;
+    }
+</style>

@@ -17,11 +17,24 @@
                             <span class="text-success fw-bold">$@movie.Price</span>
                         </p>
 
-                        <div class="d-flex gap-3 mt-2">
-                            <button type="button" class="btn btn-info">Available</button>
+                        <div class="d-flex align-items-center gap-3 mt-2">
+                            <!-- Movie Status Display -->
+                            <span class="badge @((movie.MovieStatus == MovieStatus.Expired) ? "bg-secondary" : "bg-info")"
+                                  style="font-size: 1rem; padding: 0.5rem 1rem;">
+                                @movie.MovieStatus
+                            </span>
+
+
                             <a href="/Home/Details/@movie.Id" class="btn btn-success">Show More</a>
-                            <button type="button" class="btn btn-dark">Book a Ticket</button>
+
+
+                            <!-- Book a Ticket Button -->
+                            <button type="button" class="btn @((movie.MovieStatus == MovieStatus.Expired) ? "btn-secondary" : "btn-dark")"
+                            @((movie.MovieStatus == MovieStatus.Expired) ? "disabled" : "")>
+                                Book a Ticket
+                            </button>
                         </div>
+                        
                     </div>
                 </div>
             </div>

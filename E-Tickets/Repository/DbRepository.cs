@@ -33,7 +33,7 @@ namespace E_Tickets.Repository
 
         public T? GetById(int id)
         {
-            return _dbSet.Find(id);
+            return _dbSet.AsNoTracking().FirstOrDefault(m => EF.Property<int>(m, "Id") == id);
         }
 
         public void Create(T entity)

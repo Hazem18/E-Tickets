@@ -34,13 +34,13 @@ namespace E_Tickets.Controllers
         }
         public IActionResult Details(int Id)
         {
-            var inclueExpression = new List<Expression<Func<Movie, object>>>
+            var includeExpression = new List<Expression<Func<Movie, object>>>
             {
                 c => c.Cinema,
                 c => c.Category,
                 c => c.Actors
             };
-            var movie = dbRepository.GetAll(inclueExpression).FirstOrDefault(e => e.Id == Id);
+            var movie = dbRepository.GetAll(includeExpression).FirstOrDefault(e => e.Id == Id);
             return View(movie);
         }
         public IActionResult Privacy()

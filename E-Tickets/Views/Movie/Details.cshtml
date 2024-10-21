@@ -1,11 +1,7 @@
 ﻿<div class="container-fluid" style="padding: 0;">
     <div class="row">
         <div class="d-flex gap-2 mt-3">
-            <!-- Movie Status Display -->
-            <span class="badge @((Model.MovieStatus == MovieStatus.Expired) ? "bg-secondary" : "bg-info")"
-                  style="font-size: 1rem; padding: 0.5rem 1rem;">
-                @Model.MovieStatus
-            </span>
+            <button type="button" class="btn btn-info">Available</button>
         </div>
         <div class="col-12 d-flex align-items-start justify-content-start mt-3">
             <div class="card shadow-lg border-0" style="width: 100%; max-width: 800px; display: flex; flex-direction: row; align-items: flex-start; border-radius: 10px;">
@@ -32,8 +28,8 @@
                             }
                         </ul>
                         <div class="d-flex gap-3 mt-2">
-                         
-                            <a href="/Home/Index" class="btn btn-success">Back</a>
+
+                            <a href="/Movie/Index" class="btn btn-success">Back</a>
                         </div>
                     </div>
                 </div>
