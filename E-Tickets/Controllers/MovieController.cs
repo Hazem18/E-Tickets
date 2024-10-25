@@ -33,7 +33,7 @@ namespace E_Tickets.Controllers
         public IActionResult Create()
         {
             LoadBags();
-            return View();
+            return View(new Movie());
         }
         public IActionResult Edit(int Id)
         {
@@ -46,30 +46,42 @@ namespace E_Tickets.Controllers
         [HttpPost]
         public IActionResult Create(IFormFile ImgUrl, Movie movie)
         {
-            movie.MovieStatus = DetermineMovieStatus(movie.StartDate, movie.EndDate);
+            if (ModelState.IsValid)
+            {
+                movie.MovieStatus = DetermineMovieStatus(movie.StartDate, movie.EndDate);
 
-            var fileName = UploadImg(ImgUrl);
-            movie.ImgUrl = fileName ?? string.Empty;
+                var fileName = UploadImg(ImgUrl);
+                movie.ImgUrl = fileName ?? string.Empty;
 
 
-            MoviedbRepository.Create(movie);
-            MoviedbRepository.Commit();
-            
-            return RedirectToAction("Index");
-        }
+                MoviedbRepository.Create(movie);
+                MoviedbRepository.Commit();
+
+                return RedirectToAction("Index");
+            }
+            LoadBags();
+            return View(movie);
+            }
 
         [HttpPost]
         public IActionResult Edit(IFormFile ImgUrl, Movie movie)
         {
-            movie.MovieStatus = DetermineMovieStatus(movie.StartDate, movie.EndDate);
+            ModelState.Remove("ImgUrl");
+            if (ModelState.IsValid)
+            {
+                movie.MovieStatus = DetermineMovieStatus(movie.StartDate, movie.EndDate);
 
+                movie.ImgUrl = UpdateMovieImage(ImgUrl, movie.Id);
+
+
+                MoviedbRepository.Update(movie);
+                MoviedbRepository.Commit();
+
+                return RedirectToAction("Index");
+            }
             movie.ImgUrl = UpdateMovieImage(ImgUrl, movie.Id);
-
-
-            MoviedbRepository.Update(movie);
-            MoviedbRepository.Commit();
-
-            return RedirectToAction("Index");
+            LoadBags();
+            return View(movie);
         }
         public IActionResult Delete(int Id)
         {

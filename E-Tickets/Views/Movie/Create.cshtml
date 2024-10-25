@@ -1,4 +1,5 @@
-﻿<div class="container mt-5">
+﻿@model Movie 
+<div class="container mt-5">
     <div class="card shadow-lg border-0" style="max-width: 700px; margin: 0 auto; border-radius: 20px;">
         <div class="card-header text-center" style="background: linear-gradient(to right, #6a82fb, #fc5c7d); color: white; padding: 1.5rem; border-top-left-radius: 20px; border-top-right-radius: 20px;">
             <h2 class="mb-0" style="font-size: 2rem; font-weight: 600;">Add Movie</h2>
@@ -9,6 +10,7 @@
                 <div class="form-group mb-4">
                     <label for="movieName" class="form-label" style="font-size: 1.25rem; font-weight: 500;">Movie Name</label>
                     <input type="text" id="movieName" name="Name" class="form-control form-control-lg" placeholder="Enter movie name" required style="border-radius: 10px; padding: 1rem; font-size: 1.15rem;" />
+                    <span asp-validation-for="Name" class="text-warning"></span>
                 </div>
 
                 <!-- Category Dropdown -->
@@ -21,6 +23,7 @@
                             <option value="@category.Id">@category.Name</option>
                         }
                     </select>
+                    <span asp-validation-for="CategoryId" class="text-warning"></span>
                 </div>
 
                 <!-- Cinema Dropdown -->
@@ -33,43 +36,51 @@
                             <option value="@cinema.Id">@cinema.Name</option>
                         }
                     </select>
+                    <span asp-validation-for="CinemaId" class="text-warning"></span>
                 </div>
 
                 <!-- Start Date -->
                 <div class="form-group mb-4">
                     <label for="startDate" class="form-label" style="font-size: 1.25rem; font-weight: 500;">Start Date</label>
                     <input type="date" id="startDate" name="StartDate" class="form-control form-control-lg" required style="border-radius: 10px; padding: 1rem; font-size: 1.15rem;" />
+                    <span asp-validation-for="StartDate" class="text-warning"></span>
                 </div>
 
                 <!-- End Date -->
                 <div class="form-group mb-4">
                     <label for="endDate" class="form-label" style="font-size: 1.25rem; font-weight: 500;">End Date</label>
                     <input type="date" id="endDate" name="EndDate" class="form-control form-control-lg" required style="border-radius: 10px; padding: 1rem; font-size: 1.15rem;" />
+                    <span asp-validation-for="EndDate" class="text-warning"></span>
                 </div>
 
                 <!-- Description -->
                 <div class="form-group mb-4">
                     <label for="description" class="form-label" style="font-size: 1.25rem; font-weight: 500;">Description</label>
                     <textarea id="description" name="Description" class="form-control form-control-lg" rows="3" placeholder="Enter movie description" required style="border-radius: 10px; padding: 1rem; font-size: 1.15rem;"></textarea>
+                    <span asp-validation-for="Description" class="text-warning"></span>
                 </div>
 
                 <!-- Ticket Price -->
                 <div class="form-group mb-4">
                     <label for="ticketPrice" class="form-label" style="font-size: 1.25rem; font-weight: 500;">Ticket Price</label>
                     <input type="number" id="ticketPrice" name="Price" class="form-control form-control-lg" placeholder="Enter ticket price" required style="border-radius: 10px; padding: 1rem; font-size: 1.15rem;" />
+                    <span asp-validation-for="Price" class="text-warning"></span>
                 </div>
 
                 <!-- Trailer URL -->
                 <div class="form-group mb-4">
                     <label for="trailerUrl" class="form-label" style="font-size: 1.25rem; font-weight: 500;">Trailer URL</label>
                     <input type="url" id="trailerUrl" name="TrailerUrl" class="form-control form-control-lg" placeholder="Enter trailer URL" required style="border-radius: 10px; padding: 1rem; font-size: 1.15rem;" />
+                    <span asp-validation-for="TrailerUrl" class="text-warning"></span>
                 </div>
 
                 <!-- Movie Poster -->
                 <div class="form-group mb-4">
                     <label for="poster" class="form-label" style="font-size: 1.25rem; font-weight: 500;">Movie Poster</label>
                     <input type="file" id="poster" name="ImgUrl" class="form-control form-control-lg" accept="image/*" required style="border-radius: 10px; padding: 1rem; font-size: 1.15rem;" />
+                    <span asp-validation-for="ImgUrl" class="text-warning"></span>
                     <img id="posterPreview" src="#" alt="Poster Preview" style="display: none; margin-top: 10px; max-width: 100%; border-radius: 10px;" />
+                                
                 </div>
 
                 <div class="d-flex justify-content-end">
@@ -98,7 +109,9 @@
             }
         });
 </script>
-
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml"></partial>
+}
 <style>
     body {
         background: #eef2f7; /* Light, restful background */

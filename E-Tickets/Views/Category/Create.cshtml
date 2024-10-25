@@ -1,4 +1,5 @@
-﻿<div class="container mt-5">
+﻿@model Category
+<div class="container mt-5">
     <div class="card shadow-lg border-0" style="max-width: 700px; margin: 0 auto; border-radius: 20px;">
         <div class="card-header text-center" style="background: linear-gradient(to right, #6a82fb, #fc5c7d); color: white; padding: 1.5rem; border-top-left-radius: 20px; border-top-right-radius: 20px;">
             <h2 class="mb-0" style="font-size: 2rem; font-weight: 600;">Add Category</h2>
@@ -8,6 +9,7 @@
                 <div class="form-group mb-4">
                     <label for="categoryName" class="form-label" style="font-size: 1.25rem; font-weight: 500;">Category Name</label>
                     <input type="text" id="categoryName" name="Name" class="form-control form-control-lg" placeholder="Enter category name" required style="border-radius: 10px; padding: 1rem; font-size: 1.15rem; border: 1px solid #ced4da;" />
+                    <span class="text-warning" asp-validation-for="Name"></span>
                 </div>
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary btn-lg" style="padding: 0.75rem 1.5rem; border-radius: 12px; font-size: 1.2rem; background-color: #6a82fb; border: none; transition: background-color 0.3s;">Submit</button>
@@ -16,7 +18,9 @@
         </div>
     </div>
 </div>
-
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml"></partial>
+}
 <script>
     document.getElementById('categoryForm').addEventListener('submit', function (event) {
         const categoryName = document.getElementById('categoryName').value.trim();
@@ -31,8 +35,6 @@
         }
     });
 </script>
-
-
 
 <style>
     .container {

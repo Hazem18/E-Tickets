@@ -40,15 +40,20 @@ namespace E_Tickets.Controllers
         }
         public IActionResult Create()
         {
-            return View();
+            Category category = new Category();
+            return View(category);
         }
 
         [HttpPost]
         public IActionResult Create(Category category)
         {
-            CategorydbRepository.Create(category);
-            CategorydbRepository.Commit();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                CategorydbRepository.Create(category);
+                CategorydbRepository.Commit();
+                return RedirectToAction("Index");
+            }
+            return View(category);
         }
         public IActionResult Edit(int Id)
         {
@@ -59,9 +64,13 @@ namespace E_Tickets.Controllers
         [HttpPost]
         public IActionResult Edit(Category category)
         {
-            CategorydbRepository.Update(category);
-            CategorydbRepository.Commit();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                CategorydbRepository.Update(category);
+                CategorydbRepository.Commit();
+                return RedirectToAction("Index");
+            }
+            return View(category);
         }
 
         public IActionResult Delete(int Id)

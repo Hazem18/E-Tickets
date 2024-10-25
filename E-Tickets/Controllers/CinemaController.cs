@@ -41,7 +41,8 @@ namespace E_Tickets.Controllers
         }
         public IActionResult Create()
         {
-            return View();
+            Cinema cinema = new Cinema();
+            return View(cinema);
         }
         public IActionResult Edit(int Id)
         {
@@ -52,17 +53,25 @@ namespace E_Tickets.Controllers
         [HttpPost]
         public IActionResult Create(Cinema cinema)
         {
-            CinemadbRepository.Create(cinema);
-            CinemadbRepository.Commit();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                CinemadbRepository.Create(cinema);
+                CinemadbRepository.Commit();
+                return RedirectToAction("Index");
+            }
+            return View(cinema);
         }
 
         [HttpPost]
         public IActionResult Edit(Cinema cinema)
         {
-            CinemadbRepository.Update(cinema);
-            CinemadbRepository.Commit();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                CinemadbRepository.Update(cinema);
+                CinemadbRepository.Commit();
+                return RedirectToAction("Index");
+            }
+            return View(cinema);
         }
         public IActionResult Delete(int Id)
         {
