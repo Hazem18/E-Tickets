@@ -1,0 +1,134 @@
+﻿@model E_Tickets.ViewModel.ApplicationUserVM
+
+@{
+    ViewData["Title"] = "Create Your Account";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-lg border-0" style="background-color: #ffffff; border-radius: 15px;">
+            <div class="card-body p-5">
+                <h2 class="text-center mb-4" style="color: #ff9800; font-weight: bold;">Welcome to the Magic of Cinema</h2>
+                <p class="text-center text-dark mb-5" style="font-size: 1.1rem;">"Your story begins here."</p>
+                <form asp-action="Register" method="post" id="registrationForm">
+                    <div asp-validation-summary="All" class="text-danger mb-4"></div>
+
+                    <!-- Name -->
+                    <div class="form-group mb-4">
+                        <label asp-for="Name" class="text-dark" style="font-size: 1.1rem;">Full Name</label>
+                        <input asp-for="Name" class="form-control form-control-lg input-custom" />
+                        <span asp-validation-for="Name" class="text-warning"></span>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group mb-4">
+                        <label asp-for="Email" class="text-dark" style="font-size: 1.1rem;">Email Address</label>
+                        <input asp-for="Email" class="form-control form-control-lg input-custom" />
+                        <span asp-validation-for="Email" class="text-warning"></span>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group mb-4">
+                        <label asp-for="Password" class="text-dark" style="font-size: 1.1rem;">Password</label>
+                        <input asp-for="Password" class="form-control form-control-lg input-custom" type="password" />
+                        <span asp-validation-for="Password" class="text-warning"></span>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="form-group mb-4">
+                        <label asp-for="ConfirmPassword" class="text-dark" style="font-size: 1.1rem;">Confirm Password</label>
+                        <input asp-for="ConfirmPassword" class="form-control form-control-lg input-custom" type="password" />
+                        <span asp-validation-for="ConfirmPassword" class="text-warning"></span>
+                    </div>
+
+                    <!-- City -->
+                    <div class="form-group mb-4">
+                        <label asp-for="City" class="text-dark" style="font-size: 1.1rem;">City</label>
+                        <input asp-for="City" class="form-control form-control-lg input-custom" />
+                        <span asp-validation-for="City" class="text-warning"></span>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-warning btn-lg px-5 py-2" style="font-size: 1.2rem; border-radius: 10px;">Join the Show</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <a asp-action="Index" class="text-warning" style="font-size: 1.2rem;">Back to Home</a>
+</div>
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial") <!-- Change this line -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById('registrationForm');
+            const passwordInput = document.querySelector('input[name="Password"]');
+            const confirmPasswordInput = document.querySelector('input[name="ConfirmPassword"]');
+            const errorMessage = document.createElement('span');
+
+            // Set attributes for the error message
+            errorMessage.className = "text-danger";
+            errorMessage.style.display = "none";
+            confirmPasswordInput.parentElement.appendChild(errorMessage);
+
+            form.addEventListener('submit', function (e) {
+                if (passwordInput.value !== confirmPasswordInput.value) {
+                    e.preventDefault(); // Prevent form submission
+                    errorMessage.textContent = "Passwords do not match.";
+                    errorMessage.style.display = "block";
+                } else {
+                    errorMessage.style.display = "none"; // Hide error message if valid
+                }
+            });
+        });
+    </script>
+}
+
+
+<style>
+    body {
+        background-color: #f5f5f5; /* Lighter background */
+        color: #333;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .card {
+        background-color: #ffffff;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .input-custom {
+        background-color: #e9ecef; /* Lighter input background */
+        color: #333;
+        border: 1px solid #ced4da;
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+        .input-custom:focus {
+            background-color: #f8f9fa;
+            border-color: #ff9800;
+            box-shadow: 0 0 8px rgba(255, 152, 0, 0.5);
+            outline: none;
+        }
+
+    .btn-warning {
+        background-color: #ff9800;
+        border: none;
+    }
+
+        .btn-warning:hover {
+            background-color: #ffb347;
+            transform: scale(1.05);
+        }
+
+    .text-light {
+        color: #eeeeee !important;
+    }
+</style>

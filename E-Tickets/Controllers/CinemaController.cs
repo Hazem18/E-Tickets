@@ -1,13 +1,16 @@
 ﻿using E_Tickets.Data;
 using E_Tickets.Models;
 using E_Tickets.Repository.IRepository;
+using E_Tickets.Utility;
 using Microsoft.AspNetCore.Antiforgery;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace E_Tickets.Controllers
 {
+    [Authorize(Roles = SD.adminRole)]
     public class CinemaController : Controller
     {
         private readonly IDbRepository<Cinema> CinemadbRepository;

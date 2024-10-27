@@ -1,6 +1,8 @@
 ﻿using E_Tickets.Models;
 using E_Tickets.Repository;
 using E_Tickets.Repository.IRepository;
+using E_Tickets.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Collections.Generic;
@@ -8,6 +10,7 @@ using System.Linq.Expressions;
 
 namespace E_Tickets.Controllers
 {
+    [Authorize(Roles =SD.adminRole)]
     public class MovieController : Controller
     {
         private readonly IDbRepository<Movie> MoviedbRepository;

@@ -2,6 +2,8 @@ using E_Tickets.Repository.IRepository;
 using E_Tickets.Repository;
 using E_Tickets.Data;
 using Microsoft.EntityFrameworkCore;
+using E_Tickets.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace E_Tickets
 {
@@ -15,8 +17,15 @@ namespace E_Tickets
             builder.Services.AddControllersWithViews();
 
             // Register ApplicationDbContext with DbContextOptions
-            builder.Services.AddDbContext<ApplicationDbContext>(
-                    options => options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection")));
+            builder.Services.AddDbContext<ApplicationDbContext>
+                (
+                    options => options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection"))
+                );
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
+                option => { option.Password.RequiredLength = 8; }
+                )
+               .AddEntityFrameworkStores<ApplicationDbContext>();
 
             // Register your generic repository
             builder.Services.AddScoped(typeof(IDbRepository<>), typeof(DbRepository<>));
@@ -37,6 +46,8 @@ namespace E_Tickets
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
