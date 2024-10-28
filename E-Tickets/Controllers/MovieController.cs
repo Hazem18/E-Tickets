@@ -13,11 +13,11 @@ namespace E_Tickets.Controllers
     [Authorize(Roles =SD.adminRole)]
     public class MovieController : Controller
     {
-        private readonly IDbRepository<Movie> MoviedbRepository;
-        private readonly IDbRepository<Category> CategorydbRepository;
-        private readonly IDbRepository<Cinema> CinemadbRepository;
+        private readonly IMovieRepository MoviedbRepository;
+        private readonly ICategoryRepository CategorydbRepository;
+        private readonly ICinemaRepository CinemadbRepository;
 
-        public MovieController(IDbRepository<Movie> MoviedbRepository, IDbRepository<Category> CategorydbRepository , IDbRepository<Cinema> CinemadbRepository)
+        public MovieController(IMovieRepository MoviedbRepository, ICategoryRepository CategorydbRepository , ICinemaRepository CinemadbRepository)
         {
             this.MoviedbRepository=MoviedbRepository;
             this.CategorydbRepository=CategorydbRepository;

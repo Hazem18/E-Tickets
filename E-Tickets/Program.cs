@@ -29,8 +29,13 @@ namespace E_Tickets
 
             // Register your generic repository
             builder.Services.AddScoped(typeof(IDbRepository<>), typeof(DbRepository<>));
+            builder.Services.AddScoped(typeof(ICategoryRepository), typeof(CategoryRepository));
+            builder.Services.AddScoped(typeof(ICinemaRepository), typeof(CinemaRepository));
+            builder.Services.AddScoped(typeof(IMovieRepository), typeof(MovieRepository));
 
-            
+
+
+
 
             var app = builder.Build();
 
