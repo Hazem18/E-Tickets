@@ -1,10 +1,16 @@
-﻿<div class="container mt-5">
+﻿@model IEnumerable<Movie>
+
+<div class="container mt-5">
     <h2 class="mb-4 text-center text-info font-weight-bold animated-title">Movies</h2>
-    <div class="d-flex justify-content-end mb-3">
+
+    <!-- Search bar for live filtering movies by name -->
+    <div class="d-flex justify-content-between mb-3">
+        <input type="text" id="searchInput" class="form-control w-25" placeholder="Search by movie name" />
         <a href="/Movie/Create" class="btn btn-primary btn-lg shadow-sm animated-button">Add Movie</a>
     </div>
+
     <div class="table-responsive">
-        <table class="table table-hover table-bordered shadow-sm">
+        <table class="table table-hover table-bordered shadow-sm" id="moviesTable">
             <thead class="table-dark">
                 <tr>
                     <th scope="col">#</th>
@@ -21,17 +27,15 @@
             <tbody>
                 @foreach (var movie in Model)
                 {
-                    <tr>
+                    <tr class="table-row">
                         <td>@movie.Id</td>
-                        <td>@movie.Name</td>
+                        <td class="movie-name">@movie.Name</td>
                         <td>@movie.Cinema.Name</td>
                         <td>@movie.Category.Name</td>
                         <td>@movie.StartDate.ToString("MM/dd/yyyy")</td>
                         <td>@movie.EndDate.ToString("MM/dd/yyyy")</td>
                         <td class="text-success fw-bold">$@movie.Price</td>
-                        <td>
-                                <span class="text-success">@movie.MovieStatus</span>
-                        </td>
+                        <td><span class="text-success">@movie.MovieStatus</span></td>
                         <td>
                             <a href="/Movie/Edit/@movie.Id" class="btn btn-warning btn-sm">Edit</a>
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteId('@movie.Id')">Delete</button>
@@ -41,9 +45,27 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Pagination controls -->
+    <nav aria-label="Page navigation" class="mt-3">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(ViewBag.Page == 1 ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.Page - 1 })">Previous</a>
+            </li>
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(ViewBag.Page == i ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                </li>
+            }
+            <li class="page-item @(ViewBag.Page == ViewBag.TotalPages ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.Page + 1 })">Next</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
-<!-- Modal for confirming deletion -->
+<!-- Delete Confirmation Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -63,13 +85,24 @@
 </div>
 
 <script>
+    // Live search functionality for movies
+    document.getElementById('searchInput').addEventListener('input', function () {
+        const searchTerm = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#moviesTable tbody .table-row');
+
+        rows.forEach(row => {
+            const movieName = row.querySelector('.movie-name').textContent.toLowerCase();
+            row.style.display = movieName.includes(searchTerm) ? '' : 'none';
+        });
+    });
+
     let deleteMovieId = null;
 
     function setDeleteId(id) {
         deleteMovieId = id;
     }
 
-    document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+    document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
         if (deleteMovieId) {
             window.location.href = '/Movie/Delete/' + deleteMovieId;
         }
@@ -97,6 +130,11 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
+        .table thead {
+            background-color: #343a40;
+            color: #fff;
+        }
+
     .table-hover tbody tr {
         transition: background-color 0.3s ease;
     }
@@ -112,6 +150,7 @@
 
         .btn-lg:hover {
             transform: scale(1.05);
+            background-color: #0056b3;
         }
 
     .btn-warning:hover {
@@ -122,11 +161,7 @@
         background-color: #c82333;
     }
 
-    .text-success {
-        font-weight: bold;
-    }
-
-    .text-danger {
-        font-weight: bold;
+    .animated-action {
+        animation: bounce 0.5s;
     }
 </style>

@@ -21,12 +21,29 @@ namespace E_Tickets.Controllers
             this.CategorydbRepository=CategorydbRepository;
             this.MoviedbRepository=MoviedbRepository;
         }
-        public IActionResult Index()
+        public IActionResult Index(int page = 1, int pageSize = 3)
         {
-            var categoies = CategorydbRepository.GetAll();
+            var categories = CategorydbRepository.GetAll().AsQueryable();
 
-            return View(categoies);
+            var totalCategories = categories.Count();
+
+
+            var categoriesList = categories
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+ 
+            ViewBag.TotalCategories = totalCategories;
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+
+            // Calculate total pages
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalCategories / pageSize);
+
+            return View(categoriesList);
         }
+
         public IActionResult AllMovies(int Id)
         {
 

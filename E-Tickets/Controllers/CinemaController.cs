@@ -23,10 +23,24 @@ namespace E_Tickets.Controllers
             this.CinemadbRepository=CinemadbRepository;
             this.MoviedbRepository=MoviedbRepository;
         }
-        public IActionResult Index()
+        public IActionResult Index(int page =1 , int pagesize = 3)
         {
-            var cinemas = CinemadbRepository.GetAll();
-            return View(cinemas);
+
+            var cinemas = CinemadbRepository.GetAll().AsQueryable();
+
+            var totalCinemas = cinemas.Count();
+            
+            var cinemasList = cinemas
+                .Skip((page - 1) *pagesize)
+                .Take(pagesize)
+                .ToList();
+
+            ViewBag.TotalCinemas = totalCinemas;
+            ViewBag.Page = page;
+            ViewBag.PageSize = pagesize;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalCinemas / pagesize);
+
+            return View(cinemasList);
         }
 
         public IActionResult AllMovies(int Id)

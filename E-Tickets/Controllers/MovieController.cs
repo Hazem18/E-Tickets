@@ -23,15 +23,28 @@ namespace E_Tickets.Controllers
             this.CategorydbRepository=CategorydbRepository;
             this.CinemadbRepository=CinemadbRepository;
         }
-        public IActionResult Index()
+        public IActionResult Index(int page = 1 , int pageSize = 5)
         {
             var includeExpression = new List<Expression<Func<Movie, object>>>
             {
                 c => c.Category,
                 c=>c.Cinema
             };
-            var movies = MoviedbRepository.GetAll(includeExpression); 
-            return View(movies);
+            var movies = MoviedbRepository.GetAll(includeExpression).AsQueryable();
+            
+            var totalMovies = movies.Count();
+
+            var movieList = movies
+                .Skip((page - 1 ) * pageSize)
+                .Take(pageSize)
+                .ToList();
+            ViewBag.TotalMovie = totalMovies;
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalMovies / pageSize);
+
+            return View(movieList);
         }
         public IActionResult Create()
         {
