@@ -1,4 +1,8 @@
-﻿<div class="container">
+﻿@section Scripts {
+    <partial name="_NotifactionPartial.cshtml"></partial>
+}
+
+<div class="container">
     <div class="row">
         @foreach (var movie in Model) // Assuming Model.Movies is your list of movie models
         {
@@ -24,14 +28,13 @@
                             </span>
 
 
-                            <a href="/Home/Details/@movie.Id" class="btn btn-success">Show More</a>
-
 
                             <!-- Book a Ticket Button -->
-                            <button type="button" class="btn @((movie.MovieStatus == MovieStatus.Expired) ? "btn-secondary" : "btn-dark")"
-                            @((movie.MovieStatus == MovieStatus.Expired) ? "disabled" : "")>
-                                Book a Ticket
-                            </button>
+                            <a href="@(movie.MovieStatus == MovieStatus.Expired ? "" : Url.Action("Details", "Home", new { id = movie.Id }))"
+                               class="btn @(movie.MovieStatus == MovieStatus.Expired ? "btn-secondary disabled" : "btn btn-success")">
+                                Book Your Ticket
+                            </a>
+
                         </div>
 
 

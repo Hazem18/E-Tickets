@@ -31,9 +31,21 @@
                                 </li>
                             }
                         </ul>
+                        <form action="/Booking/AddBooking">
+                            <input type="hidden" name="MovieId" value="@Model.Id" />
+                            <div class="row d-flex mb-3">
+                                <div class="col-8">
+                                    <input type="number" class="form-control" name="NumberOfTickets" placeholder="Number of ticktes">
+                                </div>
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-success">Book Your Ticket</button>
+                                </div>
+                            </div>
+                        </form>
+
                         <div class="d-flex gap-3 mt-2">
                          
-                            <a href="/Home/Index" class="btn btn-success">Back</a>
+                            <a href="/Home/Index" class="btn btn-primary">Back</a>
                         </div>
                     </div>
                 </div>

@@ -15,8 +15,9 @@ namespace E_Tickets.Data
         public DbSet<Actor> Actors { get; set; }
         public DbSet<Cinema> Cinemas { get; set; }
         public DbSet<Movie> Movies { get; set; }
-        public DbSet<E_Tickets.ViewModel.ApplicationUserVM> ApplicationUserVM { get; set; } = default!;
-        public DbSet<E_Tickets.ViewModel.LoginVM> LoginVM { get; set; } = default!;
+        public DbSet<Booking> Bookings { get; set; }
+
+
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //    base.OnConfiguring(optionsBuilder);

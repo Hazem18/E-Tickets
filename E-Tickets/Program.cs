@@ -4,6 +4,8 @@ using E_Tickets.Data;
 using Microsoft.EntityFrameworkCore;
 using E_Tickets.Models;
 using Microsoft.AspNetCore.Identity;
+using E_Tickets.Utility;
+using Stripe;
 
 namespace E_Tickets
 {
@@ -32,9 +34,11 @@ namespace E_Tickets
             builder.Services.AddScoped(typeof(ICategoryRepository), typeof(CategoryRepository));
             builder.Services.AddScoped(typeof(ICinemaRepository), typeof(CinemaRepository));
             builder.Services.AddScoped(typeof(IMovieRepository), typeof(MovieRepository));
+            builder.Services.AddScoped(typeof(IBookingRepository), typeof(BookingRepository));
 
-
-
+            // Configure Stripe settings
+            builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+            StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
 
             var app = builder.Build();

@@ -20,6 +20,9 @@ namespace E_Tickets.Models
         [Required]
         [Range(0,100000)]
         public double Price { get; set; }
+        [Required]
+        [Range(0, 1000)]
+        public int AvailableTikctes { get; set; }
         [ValidateNever]
         public string? ImgUrl { get; set; }
         [Required]
