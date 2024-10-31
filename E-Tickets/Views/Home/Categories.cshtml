@@ -1,23 +1,19 @@
-﻿@section Scripts {
-    <partial name="_NotificationPartial.cshtml"></partial>
-}
-
-<div class="container py-5">
-    <h2 class="text-center mb-5" style="font-family: 'Cinzel', serif; color: #335C81;">Explore Our Cinemas</h2>
+﻿<div class="container py-5">
+    <h2 class="text-center mb-5" style="font-family: 'Cinzel', serif; color: #335C81;">Explore Our Categories</h2>
     <div class="row justify-content-center">
-        @foreach (var cinema in Model)
+        @foreach (var category in Model)
         {
             <div class="col-md-4 col-lg-3 mb-4">
-                <div class="cinema-card shadow border-0 rounded-lg" style="background-color: #F4F7FB;">
-                    <div class="cinema-card-overlay p-4 d-flex flex-column align-items-center text-dark">
-                        <div class="cinema-icon rounded-circle mb-3 d-flex align-items-center justify-content-center">
-                            <span class="icon-text">@cinema.Name.Substring(0, 1)</span>
+                <div class="category-card shadow border-0 rounded-lg" style="background-color: #F4F7FB;">
+                    <div class="category-card-overlay p-4 d-flex flex-column align-items-center text-dark">
+                        <div class="category-icon rounded-circle mb-3 d-flex align-items-center justify-content-center">
+                            <span class="icon-text">@category.Name.Substring(0, 1)</span>
                         </div>
-                        <h5 class="cinema-name text-center mb-3" style="font-family: 'Cinzel', serif;">@cinema.Name</h5>
+                        <h5 class="category-name text-center mb-3" style="font-family: 'Cinzel', serif;">@category.Name</h5>
 
-                        <!-- Ticket Stub Button -->
-                        <a href="/Cinema/AllMovies/@cinema.Id" class="btn btn-ticket" data-toggle="tooltip" title="View Movies">
-                            🎟 Box Office
+                        <!-- View Movies Button -->
+                        <a href="/Category/AllMovies/@category.Id" class="btn btn-category" data-toggle="tooltip" title="View Movies in this Category">
+                            🎥 View Movies
                         </a>
                     </div>
                 </div>
@@ -34,25 +30,25 @@
         font-family: 'Cinzel', serif;
     }
 
-    /* Cinema Card Styling */
-    .cinema-card {
+    /* Category Card Styling */
+    .category-card {
         background-color: #F4F7FB; /* Light blue-gray */
         border-radius: 15px;
         transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transition for smoother effects */
     }
 
-        .cinema-card:hover {
-            transform: scale(1.05); /* Slight scale effect on hover */
-            box-shadow: 0 6px 20px rgba(51, 92, 129, 0.3); /* Enhanced shadow */
-        }
+    .category-card:hover {
+        transform: scale(1.05); /* Slight scale effect on hover */
+        box-shadow: 0 6px 20px rgba(51, 92, 129, 0.3); /* Enhanced shadow */
+    }
 
-    .cinema-card-overlay {
+    .category-card-overlay {
         background: rgba(255, 255, 255, 0.8); /* Soft white overlay */
         border-radius: 15px;
         text-align: center;
     }
 
-    .cinema-icon {
+    .category-icon {
         width: 70px;
         height: 70px;
         background-color: #335C81; /* Dark navy accent */
@@ -61,14 +57,14 @@
         font-weight: bold;
     }
 
-    .cinema-name {
+    .category-name {
         font-size: 1.5rem;
         color: #335C81;
         text-shadow: 1px 1px 2px #F4F7FB;
     }
 
-    /* Ticket Stub Button */
-    .btn-ticket {
+    /* View Movies Button */
+    .btn-category {
         background-color: #335C81;
         color: #F4F7FB;
         border: 1px solid #335C81;
@@ -79,11 +75,11 @@
         box-shadow: 0 4px 8px rgba(51, 92, 129, 0.2);
     }
 
-        .btn-ticket:hover {
-            background-color: #4A90E2; /* Softer blue for hover */
-            color: #FFFFFF;
-            box-shadow: 0 6px 15px rgba(74, 144, 226, 0.3);
-        }
+    .btn-category:hover {
+        background-color: #4A90E2; /* Softer blue for hover */
+        color: #FFFFFF;
+        box-shadow: 0 6px 15px rgba(74, 144, 226, 0.3);
+    }
 
     /* Add tooltip styles */
     .tooltip-inner {

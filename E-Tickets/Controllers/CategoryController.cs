@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace E_Tickets.Controllers
 {
-    [Authorize(Roles = SD.adminRole)]
+  
     public class CategoryController : Controller
     {
         private readonly ICategoryRepository CategorydbRepository;
@@ -21,6 +21,7 @@ namespace E_Tickets.Controllers
             this.CategorydbRepository=CategorydbRepository;
             this.MoviedbRepository=MoviedbRepository;
         }
+        [Authorize(Roles = SD.adminRole)]
         public IActionResult Index(int page = 1, int pageSize = 3)
         {
             var categories = CategorydbRepository.GetAll().AsQueryable();
@@ -43,7 +44,7 @@ namespace E_Tickets.Controllers
 
             return View(categoriesList);
         }
-
+        [Authorize(Roles = $"{SD.adminRole},{SD.UserRole}")]
         public IActionResult AllMovies(int Id)
         {
 
@@ -58,6 +59,7 @@ namespace E_Tickets.Controllers
             return View(movies);
 
         }
+        [Authorize(Roles = SD.adminRole)]
         public IActionResult Create()
         {
             Category category = new Category();
@@ -65,6 +67,7 @@ namespace E_Tickets.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = SD.adminRole)]
         public IActionResult Create(Category category)
         {
             if (ModelState.IsValid)
@@ -75,6 +78,7 @@ namespace E_Tickets.Controllers
             }
             return View(category);
         }
+        [Authorize(Roles = SD.adminRole)]
         public IActionResult Edit(int Id)
         {
             var category = CategorydbRepository.GetById(Id);
@@ -82,6 +86,7 @@ namespace E_Tickets.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = SD.adminRole)]
         public IActionResult Edit(Category category)
         {
             if (ModelState.IsValid)
@@ -92,7 +97,7 @@ namespace E_Tickets.Controllers
             }
             return View(category);
         }
-
+        [Authorize(Roles = SD.adminRole)]
         public IActionResult Delete(int Id)
         {
             CategorydbRepository.Delete(Id);

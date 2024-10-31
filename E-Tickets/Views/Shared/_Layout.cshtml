@@ -24,6 +24,12 @@
                         <li class="nav-item">
                             <a class="nav-link active text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        @if (User.IsInRole(SD.UserRole))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link active text-white" asp-area="" asp-controller="Home" asp-action="Categories">Categories</a>
+                             </li>
+                        }
                         @if (User.IsInRole(SD.adminRole))
                         {
 
@@ -40,13 +46,15 @@
 
                         
                         <!-- Booking Icon Link -->
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Booking" asp-action="Index" title="Access Bookings">
-                                <i class="bi bi-ticket-perforated"></i>
-                                Bookings
-                            </a>
-                        </li>
-
+                        @if (User.IsInRole(SD.UserRole))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Booking" asp-action="Index" title="Access Bookings">
+                                    <i class="bi bi-ticket-perforated"></i>
+                                    Bookings
+                                </a>
+                            </li>
+                        }
                     </ul>
                         
                     <ul class="navbar-nav ms-auto">
@@ -67,7 +75,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Profile" style="font-size: 1.1rem;">Welcome @User.Identity.Name</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="" style="font-size: 1.1rem;">Welcome @User.Identity.Name</a>
                             </li>
                         }
                     </ul>

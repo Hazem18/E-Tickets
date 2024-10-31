@@ -11,25 +11,25 @@ namespace E_Tickets.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly Repository.IRepository.IDbRepository<Movie> dbRepository;
+        private readonly ICinemaRepository cinemaRepository;
+        private readonly IMovieRepository movieRepository;
+        private readonly ICategoryRepository categoryRepository;
+
         //public HomeController(IDbRepository<Movie> dbRepository)
         //{
         //    this.dbRepository=dbRepository;
         //}
-        public HomeController(ILogger<HomeController> logger , IDbRepository<Movie> dbRepository)
+        public HomeController(ILogger<HomeController> logger, ICinemaRepository cinemaRepository , IMovieRepository movieRepository, ICategoryRepository categoryRepository)
         {
             _logger = logger;
-             this.dbRepository=dbRepository;
+            this.cinemaRepository=cinemaRepository;
+            this.movieRepository=movieRepository;
+            this.categoryRepository=categoryRepository;
         }
 
         public IActionResult Index()
         {
-            var includeExpression = new List<Expression<Func<Movie, object>>>
-            {
-                c => c.Cinema,
-                c => c.Category
-            };
-            var movies = dbRepository.GetAll(includeExpression);
+            var movies = cinemaRepository.GetAll();
             return View(movies);
         }
         public IActionResult Details(int Id)
@@ -40,8 +40,14 @@ namespace E_Tickets.Controllers
                 c => c.Category,
                 c => c.Actors
             };
-            var movie = dbRepository.GetAll(includeExpression).FirstOrDefault(e => e.Id == Id);
+            var movie = movieRepository.GetAll(includeExpression).FirstOrDefault(e => e.Id == Id);
             return View(movie);
+        }
+
+        public IActionResult Categories()
+        {
+            var categories = categoryRepository.GetAll();
+            return View(categories);
         }
         public IActionResult Privacy()
         {

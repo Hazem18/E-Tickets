@@ -8,7 +8,7 @@
     <div class="col-md-6">
         <div class="card shadow-lg border-0" style="background-color: #ffffff; border-radius: 15px;">
             <div class="card-body p-5">
-                <h2 class="text-center mb-4" style="color: #ff9800; font-weight: bold;">Welcome to the Magic of Cinema</h2>
+                <h2 class="text-center mb-4" style="color: #007bff; font-weight: bold;">Welcome to the Magic of Cinema</h2>
                 <p class="text-center text-dark mb-5" style="font-size: 1.1rem;">"Your story begins here."</p>
                 <form asp-action="Register" method="post" id="registrationForm">
                     <div asp-validation-summary="All" class="text-danger mb-4"></div>
@@ -50,7 +50,7 @@
 
                     <!-- Submit Button -->
                     <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-warning btn-lg px-5 py-2" style="font-size: 1.2rem; border-radius: 10px;">Join the Show</button>
+                        <button type="submit" class="btn btn-primary btn-lg px-5 py-2" style="font-size: 1.2rem; border-radius: 10px;">Join the Show</button>
                     </div>
                 </form>
             </div>
@@ -59,11 +59,11 @@
 </div>
 
 <div class="text-center mt-4">
-    <a asp-action="Index" class="text-warning" style="font-size: 1.2rem;">Back to Home</a>
+    <a asp-action="Index" asp-controller="Home" class="text-warning" style="font-size: 1.2rem;">Back to Home</a>
 </div>
 
 @section Scripts {
-    @Html.Partial("_ValidationScriptsPartial") <!-- Change this line -->
+    @Html.Partial("_ValidationScriptsPartial")
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const form = document.getElementById('registrationForm');
@@ -89,7 +89,6 @@
     </script>
 }
 
-
 <style>
     body {
         background-color: #f5f5f5; /* Lighter background */
@@ -113,18 +112,18 @@
 
         .input-custom:focus {
             background-color: #f8f9fa;
-            border-color: #ff9800;
-            box-shadow: 0 0 8px rgba(255, 152, 0, 0.5);
+            border-color: #007bff; /* Blue focus */
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
             outline: none;
         }
 
-    .btn-warning {
-        background-color: #ff9800;
+    .btn-primary {
+        background-color: #007bff; /* Soft blue button color */
         border: none;
     }
 
-        .btn-warning:hover {
-            background-color: #ffb347;
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker blue for hover */
             transform: scale(1.05);
         }
 

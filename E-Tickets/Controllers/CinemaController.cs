@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace E_Tickets.Controllers
 {
-    [Authorize(Roles = SD.adminRole)]
+    
     public class CinemaController : Controller
     {
         private readonly ICinemaRepository CinemadbRepository;
@@ -23,6 +23,7 @@ namespace E_Tickets.Controllers
             this.CinemadbRepository=CinemadbRepository;
             this.MoviedbRepository=MoviedbRepository;
         }
+        [Authorize(Roles = SD.adminRole)]
         public IActionResult Index(int page =1 , int pagesize = 3)
         {
 
@@ -43,6 +44,7 @@ namespace E_Tickets.Controllers
             return View(cinemasList);
         }
 
+        [Authorize(Roles = $"{SD.adminRole},{SD.UserRole}")]
         public IActionResult AllMovies(int Id)
         {
             var includeExpression = new List<Expression<Func<Movie , object>>>
@@ -56,11 +58,13 @@ namespace E_Tickets.Controllers
             return View(movies);
 
         }
+        [Authorize(Roles = SD.adminRole)]
         public IActionResult Create()
         {
             Cinema cinema = new Cinema();
             return View(cinema);
         }
+        [Authorize(Roles = SD.adminRole)]
         public IActionResult Edit(int Id)
         {
             var cinema = CinemadbRepository.GetById(Id);
@@ -68,6 +72,7 @@ namespace E_Tickets.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = SD.adminRole)]
         public IActionResult Create(Cinema cinema)
         {
             if (ModelState.IsValid)
@@ -80,6 +85,7 @@ namespace E_Tickets.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = SD.adminRole)]
         public IActionResult Edit(Cinema cinema)
         {
             if (ModelState.IsValid)
@@ -90,6 +96,7 @@ namespace E_Tickets.Controllers
             }
             return View(cinema);
         }
+        [Authorize(Roles = SD.adminRole)]
         public IActionResult Delete(int Id)
         {
             CinemadbRepository.Delete(Id);
